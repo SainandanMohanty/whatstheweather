@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textView);
         TextView textView1 = findViewById(R.id.textView2);
 
+        if (json == null) {
+            textView.setText("No results :(");
+            textView1.setText("Try a different keyword");
+        }
+
         try {
             JSONObject jsonObject = new JSONObject(json);
 
