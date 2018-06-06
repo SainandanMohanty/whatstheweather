@@ -1,9 +1,11 @@
 package com.example.sain.whatstheweather;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null) {
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         EditText editText = findViewById(R.id.editText);
         String city = editText.getText().toString();
 
@@ -37,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         DownloadTask downloadTask = new DownloadTask();
         try {
             json = downloadTask.execute(String.format(Locale.getDefault(),
-                    "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s", city, apiKey)).get();
+                    "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s",
+                    URLEncoder.encode(city, "UTF-8"), apiKey)).get();
         } catch (Exception e) {
             e.printStackTrace();
         }
