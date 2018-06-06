@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
+        TableRow tableRow = findViewById(R.id.tableRow);
+        tableRow.removeAllViews();
+        TableRow tableRow1 = findViewById(R.id.tableRow2);
+        tableRow1.removeAllViews();
+
         EditText editText = findViewById(R.id.editText);
         String city = editText.getText().toString();
 
@@ -56,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        TableRow tableRow = findViewById(R.id.tableRow);
-        tableRow.removeAllViews();
-        TableRow tableRow1 = findViewById(R.id.tableRow2);
-        tableRow1.removeAllViews();
-
         try {
             JSONObject jsonObject = new JSONObject(json);
             JSONArray jsonArray = jsonObject.getJSONArray("weather");
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private void addView(String primary, String secondary) {
